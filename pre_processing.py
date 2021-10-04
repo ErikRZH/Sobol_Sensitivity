@@ -1,24 +1,27 @@
-'this class parses model runs and returns a CSV with the parameters and mean and variance of the output to be analysed'
+'''this class parses model runs and returns a CSV with the parameters and mean and variance of the output to be analysed'''
 import csv
 import pandas as pd
 import numpy as np
 
 
 def data_extraction_sum(location, iter_name, quantity_name):
-    #Extracts data from CVS file at "location" and then sums over the desired quantity, given by "quantity_name" for each model iteration'
-    #returns the mean and variance of the sum of the quantity
+    '''
+    Extracts data from CVS file at "location" and then sums over the desired quantity, given by "quantity_name" for each model iteration'
+    returns: the mean and variance of the sum of the quantity
+    '''
 
     df = pd.read_csv(location)
 
     # get all unique values of the iterations in file
     unique_iters = df[iter_name].unique()
 
+    #initialising array for mean and variance calculation
     output_array = np.zeros(len(unique_iters))
 
     # loop through iterations and sum the deaths
     for i in unique_iters:
         iter_df = df.loc[df[iter_name] == i]
-        quantity_total = iter_df[quantity_name].sum()  # Checked the sums using excel
+        quantity_total = iter_df[quantity_name].sum()  #sum of the quantity over the model run
         output_array[i] = quantity_total
 
     output_mean = output_array.mean()
