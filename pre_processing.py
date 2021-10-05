@@ -96,4 +96,4 @@ for i in df["Index"]:
     df.at[i, quantity_variance] = i_deaths_variance
     print(i)
 
-df.to_csv("parameter_output.csv", index=False)
+df.to_csv("parameters_output.csv", index=False)
