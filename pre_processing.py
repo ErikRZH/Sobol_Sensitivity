@@ -1,4 +1,4 @@
-'''this class parses model runs and returns a CSV with the parameters and mean and variance of the output to be analysed'''
+"""this class parses model runs and returns a CSV with the parameters and mean and variance of the output to be analysed"""
 import csv
 import os
 import re
@@ -7,10 +7,10 @@ import numpy as np
 
 
 def data_extraction_sum(location, iter_name, quantity_name):
-    '''
+    """
     Extracts data from CSV file at "location" and then sums over the desired quantity, given by "quantity_name" for each model iteration.
     returns: the mean and variance of the sum of the quantity.
-    '''
+    """
 
     df = pd.read_csv(location)
 
@@ -33,11 +33,11 @@ def data_extraction_sum(location, iter_name, quantity_name):
 
 
 def get_index_locations():
-    '''
+    """
     Heavily data structure dependent function.
     Gives id and associated location of all runs as a dictionary.
     returns: dictionary with key=run_index,value=run_location.
-    '''
+    """
 
     # nr of different folders (1,2,3,4)
     folder_count = range(1, 4 + 1)
@@ -76,13 +76,13 @@ def get_index_locations():
 
     return output_index_location
 
-
+#create index-file location dictionary
 index_locations = get_index_locations()
 
 my_iter_name = "iter"  # name of column which stores iterations
 my_quantity_name = " inc_death"  # name of model quanitity to be summed
 
-'''creating master CSV file'''
+#creating master CSV file
 quantity_mean = "total_deaths_mean"
 quantity_variance = "total_deaths_variance"
 df = pd.read_csv("posterior_parameters.csv")
@@ -90,6 +90,7 @@ df.set_index("Index")
 df[quantity_mean] = np.nan
 df[quantity_variance] = np.nan
 
+#loop over indivies to make CSV file
 for i in df["Index"]:
     i_deaths_mean, i_deaths_variance = data_extraction_sum(index_locations[i], my_iter_name, my_quantity_name)
     df.at[i, quantity_mean] = i_deaths_mean
