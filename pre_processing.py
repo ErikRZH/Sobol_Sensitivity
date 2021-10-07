@@ -77,7 +77,7 @@ def get_index_locations():
     return output_index_location
 
 
-def esoteric_data_to_CSV(output_csv_name):
+def create_CSV_from_esoteric_data(output_csv_name):
     """
 
     Extracts model output data stored in an esoteric folder structure:
@@ -121,6 +121,5 @@ def esoteric_data_to_CSV(output_csv_name):
         i_deaths_mean, i_deaths_variance = data_extraction_sum(index_locations[i], my_iter_name, my_quantity_name)
         df.at[i, quantity_mean] = i_deaths_mean
         df.at[i, quantity_variance] = i_deaths_variance
-        print(i)
 
     df.to_csv(output_csv_name, index=False)
