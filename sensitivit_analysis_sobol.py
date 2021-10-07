@@ -5,10 +5,10 @@ import pandas as pd
 import numpy as np
 
 def salteli_with_constant_bounds(problem_in,N_in):
-    '''T
-    akes as input a problem dictionary, which may include constants! and an integer N
+    """
+    Takes as input a problem dictionary, which may include constants! and an integer N
     provides as output a saletli sampling of the parameters, while ignoring the constants, Returned as a (D,N*(2D+2)) numpy array
-    '''
+    """
 
     # saletlli_sample_with_constants
     '''removes the constant parameters from the problem dictionary and then generates samples and reinserts constant values'''
@@ -50,7 +50,7 @@ parameters = ["p_inf", "p_hcw", "c_hcw", "d", "q", "p_s", "rrd", "lambda", "T_la
               "T_hos",
               "K", "inf_asym"]
 
-'''a single value means it is be a constant with that value'''
+#a single value means it is be a constant with that value
 bounds = [[0, 1], [0, 1], [1, 80], [0, 1], [0, 1], [0, 1], [1],[1e-9, 1e-3], [0.1, 14], [0, 1], [0.1, 21], [1, 28],
           [0.1, 14], [1, 35], [10000], [0, 1]]
 

@@ -7,7 +7,7 @@ import random
 
 
 def get_training_test_set(df_in, test_set_size_in):
-    '''
+    """
     Split into training and testset
     Inputs:
     df_in, pandas dataframe where each row is a sample
@@ -16,7 +16,7 @@ def get_training_test_set(df_in, test_set_size_in):
     outputs:
     df_training, subset of df_in chosen as training set
     df_training, subset of df_in chosen as test set
-    '''
+    """
 
     total_runs = len(df_in.index)
     test_set_size = test_set_size_in
@@ -31,8 +31,9 @@ def get_training_test_set(df_in, test_set_size_in):
 
 
 def train_GP_emulator(X_in, y_in, alpha_in):
-    '''Returns a model trained on scaled/normalised inputs and scaler object for inputs'''
-    '''Gaussian process section'''
+    """Returns a model trained on scaled/normalised inputs and scaler object for inputs"""
+
+    #Gaussian process section
     # Scaling input parameters
     gp_scaler = StandardScaler()
     gp_scaler.fit(X_in)
@@ -45,7 +46,7 @@ def train_GP_emulator(X_in, y_in, alpha_in):
 
 
 def predict_GP_emulator(X_in, model_in, scaler_in, return_std_in: bool = False):
-    '''
+    """
     Args:
         X_in: parameters to predict output for (need not be normalised).
         model_in: model to be evaluated (preferable trained).
@@ -53,18 +54,18 @@ def predict_GP_emulator(X_in, model_in, scaler_in, return_std_in: bool = False):
     Returns:
         y_pred_out: Prediction for parameters given by X_in.
         std_out: standard deviation associated with y_pred_out (if return_std_in = True).
-    '''
+    """
 
     return model_in.predict(scaler_in.transform(X_in), return_std=return_std_in)
 
 
 def evaluate_GP_emulator(X_in, y_in, model_in, scaler_in):
-    '''
+    """
     Args:
         X_in: training set parameters (need not be normalised).
         y_in: correct labels for training examples.
         model_in: trained model to be evaluated.
-    '''
+    """
     # Predict labels
     y_pred, std = predict_GP_emulator(X_in, model_in, scaler_in, True)
 
@@ -84,7 +85,7 @@ def evaluate_GP_emulator(X_in, y_in, model_in, scaler_in):
 
 
 def train_and_predict(df_in, params_in, quantity_mean_in, quantity_varaince_in, X_in):
-    '''
+    """
     Takes as input training data and parmeters to be tested and returns the GP emulator predictions
     Args:
         df_in: pandas.dataframe with input parameters and the mean and variance of the output quantity.
@@ -94,7 +95,7 @@ def train_and_predict(df_in, params_in, quantity_mean_in, quantity_varaince_in, 
         X_in: Numpy array with the parameters (in same order as in params_in) to be tested, and each row a different set of parameters.
     Returns:
         Y_out: the gaussian process estimator predictions for each row in X_in.
-    '''
+    """
     X_tr_temp, y_tr_temp, alpha_tr_temp = form_training_set(df_in,params_in,quantity_mean_in,quantity_varaince_in)
     temp_model, temp_scaler = train_GP_emulator(X_tr_temp, y_tr_temp, alpha_tr_temp)
     y_out = predict_GP_emulator(X_in,temp_model,temp_scaler)
@@ -102,9 +103,9 @@ def train_and_predict(df_in, params_in, quantity_mean_in, quantity_varaince_in, 
 
 
 def form_training_set(df_in, params_in, quantity_mean_in, quantity_varaince_in):
-    '''creates numpy arrays from a pandas dataframe. The numpy arrays can then be used for training
+    """creates numpy arrays from a pandas dataframe. The numpy arrays can then be used for training
         Returns: NumpyArrays, X_out,Y_out,alpha_out, used for model training
-    '''
+    """
     # Training set
     params_temp = df_in[params_in]
     X_out = params_temp.to_numpy()  # training parameters
@@ -118,7 +119,7 @@ def form_training_set(df_in, params_in, quantity_mean_in, quantity_varaince_in):
 
 
 def form_test_set(df_in, params_in, quantity_mean_in):
-    '''creates numpy arrays from pandas dataframe. the arrays are the ones used for testing'''
+    """creates numpy arrays from pandas dataframe. the arrays are the ones used for testing"""
     params_temp = df_in[params_in]  # test set parameters
     X_out = params_temp.to_numpy()
 
@@ -127,8 +128,11 @@ def form_test_set(df_in, params_in, quantity_mean_in):
     return X_out, y_out
 
 
-'''Takes as input a csv file with parameters and the output quantity and its variance'''
+"""Takes as input a csv file with parameters and the output quantity and its variance"""
 def gaussian_process_example():
+    """
+    This code is an example of how the functions may be used
+    """
     df = pd.read_csv("parameters_output.csv")
 
     parameters = ["p_inf", "p_hcw", "c_hcw", "d", "q", "p_s", "rrd", "lambda", "T_lat", "juvp_s", "T_inf", "T_rec", "T_sym",
