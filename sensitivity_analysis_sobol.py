@@ -78,40 +78,40 @@ def sobol_indicies_from_emulator(df_in, params_in,bounds_in,quantity_mean_in, qu
     return df_out
 
 # ONLY SPECIFY ONCE
+def example():
+    df = pd.read_csv("parameters_output.csv")
 
-df = pd.read_csv("parameters_output.csv")
+    parameters = ["p_inf", "p_hcw", "c_hcw", "d", "q", "p_s", "rrd", "lambda", "T_lat", "juvp_s", "T_inf", "T_rec", "T_sym",
+                  "T_hos",
+                  "K", "inf_asym"]
 
-parameters = ["p_inf", "p_hcw", "c_hcw", "d", "q", "p_s", "rrd", "lambda", "T_lat", "juvp_s", "T_inf", "T_rec", "T_sym",
-              "T_hos",
-              "K", "inf_asym"]
+    # a single value means it is a constant with that value
+    bounds = [[0, 1], [0, 1], [1, 80], [0, 1], [0, 1], [0, 1], [1], [1e-9, 1e-3], [0.1, 14], [0, 1], [0.1, 21], [1, 28],
+              [0.1, 14], [1, 35], [10000], [0, 1]]
 
-# a single value means it is a constant with that value
-bounds = [[0, 1], [0, 1], [1, 80], [0, 1], [0, 1], [0, 1], [1], [1e-9, 1e-3], [0.1, 14], [0, 1], [0.1, 21], [1, 28],
-          [0.1, 14], [1, 35], [10000], [0, 1]]
+    quantity_mean = "total_deaths_mean"
+    quantity_varaince = "total_deaths_variance"
 
-quantity_mean = "total_deaths_mean"
-quantity_varaince = "total_deaths_variance"
+    N = 2 ** 11  # SELECT A POWER OF 2
 
-N = 2 ** 11  # SELECT A POWER OF 2
+    S1_ST_df = sobol_indicies_from_emulator(df,parameters,bounds,quantity_mean,quantity_varaince,N)
 
-S1_ST_df = sobol_indicies_from_emulator(df,parameters,bounds,quantity_mean,quantity_varaince,N)
+    #Conf is the 95% confidence interval
 
-#Conf is the 95% confidence interval
+    # Analyse and visualise the results
+    labels = S1_ST_df.index.values
+    S1_plot = S1_ST_df ["S1"]
+    x = np.arange(len(labels))  # the label locations
+    width = 0.45  # the width of the bars
 
-# Analyse and visualise the results
-labels = S1_ST_df.index.values
-S1_plot = S1_ST_df ["S1"]
-x = np.arange(len(labels))  # the label locations
-width = 0.45  # the width of the bars
+    fig, ax = plt.subplots(figsize=(12, 6))
+    rects1 = ax.bar(x, S1_plot, width)
 
-fig, ax = plt.subplots(figsize=(12, 6))
-rects1 = ax.bar(x, S1_plot, width)
-
-# Add some text for labels, title and custom x-axis tick labels, etc.
-ax.set_ylabel('S1')
-ax.set_title('S1 index for parameters')
-ax.set_xticks(x)
-ax.set_xticklabels(labels)
-ax.bar_label(rects1, padding=3)
-fig.tight_layout()
-plt.show()
+    # Add some text for labels, title and custom x-axis tick labels, etc.
+    ax.set_ylabel('S1')
+    ax.set_title('S1 index for parameters')
+    ax.set_xticks(x)
+    ax.set_xticklabels(labels)
+    ax.bar_label(rects1, padding=3)
+    fig.tight_layout()
+    plt.show()

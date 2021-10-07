@@ -76,25 +76,50 @@ def get_index_locations():
 
     return output_index_location
 
-#create index-file location dictionary
-index_locations = get_index_locations()
 
-my_iter_name = "iter"  # name of column which stores iterations
-my_quantity_name = " inc_death"  # name of model quanitity to be summed
+def create_CSV_from_esoteric_data(output_csv_name):
+    """
 
-#creating master CSV file
-quantity_mean = "total_deaths_mean"
-quantity_variance = "total_deaths_variance"
-df = pd.read_csv("posterior_parameters.csv")
-df.set_index("Index")
-df[quantity_mean] = np.nan
-df[quantity_variance] = np.nan
+    Extracts model output data stored in an esoteric folder structure:
+    ├───UQ_eera_2020-09-11_part1
+    │   ├───output_row_0
+    │   │    └───output_prediction_simu_...
+    │   ├───output_row_1
+    │   │    └───output_prediction_simu_...
+    │   ...
+    ...
 
-#loop over indivies to make CSV file
-for i in df["Index"]:
-    i_deaths_mean, i_deaths_variance = data_extraction_sum(index_locations[i], my_iter_name, my_quantity_name)
-    df.at[i, quantity_mean] = i_deaths_mean
-    df.at[i, quantity_variance] = i_deaths_variance
-    print(i)
+    Where, "output_prediction_simu..." is a csv containing the output of 1000 different 200 day runs for 1 choice of parameters
 
-df.to_csv("parameters_output.csv", index=False)
+    the parameters associated with the runs are located in: "posterior_parameters.csv".
+
+    This function parses through this data and extracts the mean and variance of a quantity of interest and then writes:
+        run index, parameters for run, mean of the quanitity of interest, variance of the quantity of interest
+    to a CSV file.
+
+    The CSV file this function creates is then of the type that it may be analysed using sensitvity_analysis_sobol.py
+
+    Args:
+        output_csv_name: the name of the parameters-output CSV file.
+    """
+    # create index-file location dictionary
+    index_locations = get_index_locations()
+
+    my_iter_name = "iter"  # name of column which stores iterations
+    my_quantity_name = " inc_death"  # name of model quanitity to be summed
+
+    # creating master CSV file
+    quantity_mean = "total_deaths_mean"
+    quantity_variance = "total_deaths_variance"
+    df = pd.read_csv("posterior_parameters.csv")
+    df.set_index("Index")
+    df[quantity_mean] = np.nan
+    df[quantity_variance] = np.nan
+
+    # loop over indivies to make CSV file
+    for i in df["Index"]:
+        i_deaths_mean, i_deaths_variance = data_extraction_sum(index_locations[i], my_iter_name, my_quantity_name)
+        df.at[i, quantity_mean] = i_deaths_mean
+        df.at[i, quantity_variance] = i_deaths_variance
+
+    df.to_csv(output_csv_name, index=False)
