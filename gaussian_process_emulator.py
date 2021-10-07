@@ -86,6 +86,7 @@ def evaluate_GP_emulator(X_in, y_in, model_in, scaler_in):
 
 def train_and_predict(df_in, params_in, quantity_mean_in, quantity_varaince_in, X_in):
     """
+
     Takes as input training data and parmeters to be tested and returns the GP emulator predictions
     Args:
         df_in: pandas.dataframe with input parameters and the mean and variance of the output quantity.
