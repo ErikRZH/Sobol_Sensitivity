@@ -44,7 +44,7 @@ def train_GP_emulator(X_in, y_in, alpha_in):
     return gp_model, gp_scaler
 
 
-def predict_GP_emulator(X_in, model_in, scaler_in, return_std_in):
+def predict_GP_emulator(X_in, model_in, scaler_in, return_std_in: bool = False ):
     '''
     Args:
         X_in: parameters to predict output for (need not be normalised).
@@ -94,7 +94,7 @@ quantity_mean = "total_deaths_mean"
 quantity_varaince = "total_deaths_variance"
 
 # Randomly select a few samples to form a training set and a test set
-random.seed(42)
+random.seed(41)
 df_tr, df_te = form_training_test_set(df, 20)
 
 # Training set
