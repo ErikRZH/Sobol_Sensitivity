@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 import random
 
 
-def form_training_test_set(df_in, test_set_size_in):
+def get_training_test_set(df_in, test_set_size_in):
     '''
     Split into training and testset
     Inputs:
@@ -82,6 +82,45 @@ def evaluate_GP_emulator(X_in, y_in, model_in, scaler_in):
     plt.show()
     return
 
+def train_and_predict(df_in, params_in,quantity_mean_in, quantity_varaince_in, X_in):
+    '''
+    Takes as input training data and parmeters to be tested and returns the GP emulator predictions
+    Args:
+        df_in: pandas.dataframe with input parameters and the mean and variance of the output quantity.
+        params_in: names of the columns with model parameters in df_in.
+        quantity_mean_in: name of the column with the mean of the model output to be analysed.
+        quantity_varaiance_in: name of the column with the variance of the model output to be analysed.
+        X_in: Numpy array with the parameters (in same order as in params_in) to be tested, and each row a different set of parameters.
+    Returns:
+        Y_out: the gaussian process estimator predictions for each row in X_in.
+    '''
+
+
+
+def form_training_set(df_in, params_in,quantity_mean_in,quantity_varaince_in):
+    '''creates numpy arrays from a pandas dataframe. The numpy arrays can then be used for training
+        Returns: NumpyArrays, X_out,Y_out,alpha_out, used for model training
+    '''
+    # Training set
+    params_temp = df_in[params_in]
+    X_out = params_temp.to_numpy()  # training parameters
+
+    output_mean_temp = df_in[quantity_mean]
+    y_out = output_mean_temp.to_numpy()  # training outputs
+
+    output_variance_temp = df_in[quantity_varaince]
+    alpha_out = output_variance_temp.to_numpy()  # variance at training points, as described in sklearn docs
+    return X_out, y_out, alpha_out
+
+def form_test_set(df_in,params_in,quantity_mean_in):
+    '''creates numpy arrays from pandas dataframe. the arrays are the ones used for testing'''
+    params_temp = df_in[params_in] # test set parameters
+    X_out = params_temp.to_numpy()
+
+    output_mean_temp = df_in[quantity_mean_in] #correct test set labels
+    y_out = output_mean_temp.to_numpy()
+    return X_out, y_out
+
 
 '''Takes as input a csv file with parameters and the output quantity and its variance'''
 
@@ -95,24 +134,13 @@ quantity_varaince = "total_deaths_variance"
 
 # Randomly select a few samples to form a training set and a test set
 random.seed(41)
-df_tr, df_te = form_training_test_set(df, 20)
+df_tr, df_te = get_training_test_set(df, 20)
 
 # Training set
-params_tr = df_tr[parameters]
-X_tr = params_tr.to_numpy()  # training parameters
-
-output_mean_tr = df_tr[quantity_mean]
-y_tr = output_mean_tr.to_numpy()  # training outputs
-
-output_variance_tr = df_tr[quantity_varaince]
-alpha = output_variance_tr.to_numpy()  # variance at training points, as described in sklearn docs
+X_tr, y_tr, alpha = form_training_set(df_tr,parameters,quantity_mean,quantity_varaince)
 
 # Test set
-params_te = df_te[parameters]
-X_te = params_te.to_numpy()
-
-output_mean_te = df_te[quantity_mean]
-y_te = output_mean_te.to_numpy()
+X_te, y_te = form_test_set(df_te,parameters,quantity_mean)
 
 # Training model on training set
 my_model, my_scaler = train_GP_emulator(X_tr, y_tr, alpha)
