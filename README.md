@@ -8,7 +8,7 @@ Avoids performing [*Sobol sensitivity analysis*](https://en.wikipedia.org/wiki/V
 
 ## Contents
 * Implementation of Sobol sensitivity analysis using a Gaussian process emulator: `sensitivity_analysis_sobol.py`.
-* Methods of training and making predictions using a a Gaussian Process emulator: `gaussian_process_emulator.py`.
+* Methods of training and making predictions using a Gaussian Process emulator: `gaussian_process_emulator.py`.
 * An example data file  containing the inputs and ouputs of an agent based model: `parameters_output.csv`.
 * Example of how to extract Sobol sensitivities: `example_sobol.py`.
 * Example of how to train and test a Gaussian process emulator: `example_gaussian_process_emulator.py`.
