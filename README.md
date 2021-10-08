@@ -17,13 +17,13 @@ Avoids performing [*Sobol sensitivity analysis*](https://en.wikipedia.org/wiki/V
 # Examples
 Examples of (1) how to extract Sobol indices of a model from data and of (2) how to train and evaluate a Gaussian Process Emulator are provided. 
 
-(1) Running `example_sobol.py` analyses the parameter sensitivities  from `parameters_output.csv` and displays a plot which should appear as below:
+(1) Running `example_sobol.py` analyses the parameter sensitivities  from `parameters_output.csv`, producing following plot.
 
-![github-small](images/example_sobol.png)
+<img src="images/example_sobol.png" width=70% height=70%, class="center">
 
-(2) Running `example_gaussian_process_emulator.py` trains a model on `parameters_output.csv` and plot the models test set performance. It should produce a plot as below:
+(2) Running `example_gaussian_process_emulator.py` trains a model on `parameters_output.csv` it then plots the models test set performance.
 
-![github-small](images/example_gaussian_process_emulator.png)
+<img src="images/example_gaussian_process_emulator.png" width=70% height=70%, class="center">
 
 **Esoteric Data Extraction**
 ---
