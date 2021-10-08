@@ -1,6 +1,5 @@
 import pandas as pd
 import matplotlib.pyplot as plt
-from pre_processing import create_CSV_from_esoteric_data
 from sensitivity_analysis_sobol import sobol_indicies_from_emulator
 
 df = pd.read_csv("parameters_output.csv")
@@ -26,12 +25,10 @@ labels = Si_df.index.values
 S1 = Si_df ["S1"]
 S_interaction = Si_df["ST"]-Si_df["S1"]
 width = 0.95
-
 fig, ax = plt.subplots(figsize=(10, 8))
-
 ax.bar(labels, S1, width, label='Main effect',color='blue', edgecolor = "black")
 ax.bar(labels, S_interaction, width, bottom=S1, label='Interaction', color='red', edgecolor = "black")
-ax.set_xlabel('Parameter')
+ax.set_xlabel('Parameters')
 ax.set_title('Sobol Sensitivity of Model Parameters')
 ax.set_ylim([0, 1])
 ax.legend()
