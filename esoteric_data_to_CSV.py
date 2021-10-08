@@ -1,5 +1,4 @@
 """this class parses model runs and returns a CSV with the parameters and mean and variance of the output to be analysed"""
-import csv
 import os
 import re
 import pandas as pd
