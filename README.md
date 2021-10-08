@@ -4,7 +4,7 @@ Tools to Perform Sobol Sensitivity Analysis on Mathematical Model using a Gaussi
 
 
 ## Description
-Avoids perfoming [*Sobol sensitivity analysis*](https://en.wikipedia.org/wiki/Variance-based_sensitivity_analysis) directly on the model in question, as models often are expensive to evaluate. Instead, a statistical surrogate model is created from samples of the original models inputs and outputs. The statistical surrogate model is created using a [*Gaussian process emulator*](https://en.wikipedia.org/wiki/Gaussian_process_emulator). Sobol sensisitivity analysis is then performed on the surrogate model to obtain the first order (S1) and total order (ST) sensitivity indicies.
+Avoids performing [*Sobol sensitivity analysis*](https://en.wikipedia.org/wiki/Variance-based_sensitivity_analysis) directly on the model in question, as models often are expensive to evaluate. Instead, a statistical surrogate model is created from samples of the original models inputs and outputs. The statistical surrogate model is created using a [*Gaussian process emulator*](https://en.wikipedia.org/wiki/Gaussian_process_emulator). Sobol sensitivity  analysis is then performed on the surrogate model to obtain the first order (S1) and total order (ST) sensitivity indices.
 
 ## Contents
 * Implementation of Sobol sensitivity analysis using a Gaussian process emulator: `sensitivity_analysis_sobol.py`.
@@ -15,9 +15,9 @@ Avoids perfoming [*Sobol sensitivity analysis*](https://en.wikipedia.org/wiki/Va
 * Method to convert data with an esoteric structure (See bottom of README) to CSV: `esoteric_data_to_CSV.py`.
 
 # Examples
-Examples of (1) how to extract Sobol indicies of a model from data and of (2) how to train and evaluate a Gaussian Process Emulator are provided. 
+Examples of (1) how to extract Sobol indices of a model from data and of (2) how to train and evaluate a Gaussian Process Emulator are provided. 
 
-(1) Running `example_sobol.py` analyses the paremeter sensitivites from `parameters_output.csv` and displays a plot which should appear as below:
+(1) Running `example_sobol.py` analyses the parameter sensitivities  from `parameters_output.csv` and displays a plot which should appear as below:
 
 ![github-small](images/example_sobol.png)
 
