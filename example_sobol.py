@@ -25,7 +25,7 @@ labels = Si_df.index.values
 S1 = Si_df ["S1"]
 S_interaction = Si_df["ST"]-Si_df["S1"]
 width = 0.95
-fig, ax = plt.subplots(figsize=(10, 8))
+fig, ax = plt.subplots(figsize=(10, 6))
 ax.bar(labels, S1, width, label='Main effect',color='blue', edgecolor = "black")
 ax.bar(labels, S_interaction, width, bottom=S1, label='Interaction', color='red', edgecolor = "black")
 ax.set_xlabel('Parameters')
