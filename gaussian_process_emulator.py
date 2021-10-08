@@ -104,15 +104,15 @@ def evaluate_GP_emulator(X_in: np.ndarray, y_in: np.ndarray, model_in: gp.Gaussi
     y_pred, std = predict_GP_emulator(X_in, model_in, scaler_in, True)
 
     # Plot validation figure
-    plt.figure()
+    plt.figure(figsize=(10.5, 6))
     plt.plot(range(len(y_in)), y_in, 'o', color='black', label='True Value')
     plt.plot(range(len(y_pred)), y_pred, 'o', color='red', label='Prediction')
     plt.plot(range(len(y_in)), y_pred - 1.9600 * std, '--', color='black')
     plt.plot(range(len(y_in)), y_pred + 1.9600 * std, '--', color='black', label='95% confidence interval')
-    plt.ylabel('Total Hospital Deaths over 200 days')
-    plt.xlabel('Test points')
+    plt.ylabel('Total Hospital Deaths Over 200 days', fontsize=15)
+    plt.xlabel('Test points', fontsize=15)
     plt.ylim(0)
-    plt.title('Gaussian Process Emulator Test Set Performance')
+    plt.title('Gaussian Process Emulator Test Set Performance', fontsize=15)
     plt.legend(loc='lower left')
     plt.show()
     return
