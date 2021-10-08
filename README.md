@@ -37,7 +37,7 @@ While superfluous to most users, `esoteric_data_to_CSV.py` is included specifica
     │   ...
     ...
 ```
-To extract data from this type of structure and generate a CSV file which can be studied use:
+To extract data from this type of structure and generate a CSV file use:
 ```
 from esoteric_data_to_CSV import create_CSV_from_esoteric_data
 
