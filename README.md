@@ -1,6 +1,8 @@
 # Sobol_Sensitivity
 
-Tools to Perform Sobol Sensitivity Analysis on a Mathematical Model using a Gaussian Process Emulator.
+Tools to Perform Sobol Sensitivity Analysis on a Mathematical Model using a Gaussian Process Emulator. 
+
+:warning: **This has been incorporated into the [**sandu**](https://github.com/ErikRZH/sandu) package, future development will take place there.** :warning:
 
 
 ## Description
